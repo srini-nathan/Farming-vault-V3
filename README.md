@@ -1,15 +1,17 @@
-# Basic Sample Hardhat Project
+# Plethori  Farming Vault on UniswapV3
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+This project contains the Farming Vault of the Plethori application. 
 
-Try running some of the following tasks:
+The vaults are better by increasing buying pressure and locking up more of supply.
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+If you want to contribute, please refer to the [contributing guidelines](./CONTRIBUTING.md) of this project.
+
+# PLE/ETH NFT contentrated postion vaults
+
+Plethori farming vaults include three farming vaults and give the PLE token reward to users who are locking their NFT position tokenID.
+
+Here are three vaults:
+
+A : 35% in full range
+B : 25% in common range
+C : 45% in rare range
