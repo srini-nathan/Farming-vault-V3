@@ -6,7 +6,7 @@ The Plethori vaults are better to allow users who want more passsive income with
 
 If you want to contribute, please refer to the [contributing guidelines](./CONTRIBUTING.md) of this project.
 
-# PLE/ETH NFT contentrated postion vaults
+# PLE/ETH NFT concentrated postion vaults
 
 Plethori farming vaults include three farming vaults and give the PLE token reward to users who are depositing their NFT position tokenID.
 
