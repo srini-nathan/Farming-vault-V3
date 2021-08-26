@@ -114,8 +114,10 @@ contract PlethoriVaultA {
         if (pendingDivs > 0) {
 
            uint256 amountAfterFee = pendingDivs * WITHDRAW_FEE / 1e4;
+           uint256 rewardAfterFee = pendingDivs - amountAfterFee;
+
             require(
-                IERC20(rewardToken).transfer(account, pendingDivs),
+                IERC20(rewardToken).transfer(account, rewardAfterFee),
                 "Can not transfer"
             );
             require(
