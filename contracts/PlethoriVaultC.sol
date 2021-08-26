@@ -28,6 +28,7 @@ contract PlethoriVaultC {
 
     address public feeAddress;
     uint256 public REWARD_INTERVAL = 365 days;
+    uint256 public WITHDRAW_FEE = 150;
 
     mapping(uint256 => Deposit) public deposits;
 
@@ -111,8 +112,13 @@ contract PlethoriVaultC {
     function updateVault(address account, uint256 tokenId) internal {
         uint256 pendingDivs = getPendingReward(tokenId);
         if (pendingDivs > 0) {
+           uint256 amountAfterFee = pendingDivs * WITHDRAW_FEE / 1e4;
             require(
                 IERC20(rewardToken).transfer(account, pendingDivs),
+                "Can not transfer"
+            );
+            require(
+                IERC20(rewardToken).transfer(feeAddress, amountAfterFee),
                 "Can not transfer"
             );
         }
