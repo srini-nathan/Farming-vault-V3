@@ -29,19 +29,28 @@ contract PlethoriVaultA {
     address public feeAddress;
     uint256 public REWARD_INTERVAL = 365 days;
     uint256 public WITHDRAW_FEE = 150;
+    address public admin;
+
 
     mapping(uint256 => Deposit) public deposits;
+
+    modifier onlyAdmin() {
+        require(msg.sender == admin, "The caller is not admin.");
+        _;
+    }
 
     constructor(
         IUniswapV3Factory _factory,
         INonfungiblePositionManager _nonfungiblePositionManager,
         IERC20 _rewardToken,
-        address _feeAddress
+        address _feeAddress,
+        address _admin
     ) {
         factory = _factory;
         nonfungiblePositionManager = _nonfungiblePositionManager;
         rewardToken = _rewardToken;
         feeAddress = _feeAddress;
+        admin = _admin;
     }
 
     function getRewardBalance() internal view returns (uint256) {
@@ -112,9 +121,8 @@ contract PlethoriVaultA {
     function updateVault(address account, uint256 tokenId) internal {
         uint256 pendingDivs = getPendingReward(tokenId);
         if (pendingDivs > 0) {
-
-           uint256 amountAfterFee = pendingDivs * WITHDRAW_FEE / 1e4;
-           uint256 rewardAfterFee = pendingDivs - amountAfterFee;
+            uint256 amountAfterFee = (pendingDivs * WITHDRAW_FEE) / 1e4;
+            uint256 rewardAfterFee = pendingDivs - amountAfterFee;
 
             require(
                 IERC20(rewardToken).transfer(account, rewardAfterFee),
@@ -143,4 +151,15 @@ contract PlethoriVaultA {
         require(deposits[tokenId].owner == userAddress, "The claimer is not.");
         updateVault(userAddress, tokenId);
     }
+
+    function withdrawToAdmin() external onlyAdmin {
+        uint256 balance = getRewardBalance();
+        if (balance > 0) {
+            require(
+                IERC20(rewardToken).transfer(admin, balance),
+                "Can not transfer"
+            );
+        }
+    }
+    
 }

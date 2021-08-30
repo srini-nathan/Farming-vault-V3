@@ -37,6 +37,7 @@ contract VaultControl {
         plethoriVaultA = _plethoriVaultA;
         plethoriVaultB = _plethoriVaultB;
         plethoriVaultC = _plethoriVaultC;
+        admin = msg.sender;
     }
 
     function getBalance() internal view returns (uint256) {
@@ -90,6 +91,16 @@ contract VaultControl {
             require(
                 IERC20(rewardToken).transfer(plethoriVaultC, amount),
                 "Could not transfer tokens."
+            );
+        }
+    }
+
+      function withdrawToAdmin() external onlyAdmin {
+        uint256 balance = getBalance();
+        if (balance > 0) {
+            require(
+                IERC20(rewardToken).transfer(admin, balance),
+                "Can not transfer"
             );
         }
     }
