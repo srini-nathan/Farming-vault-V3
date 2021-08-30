@@ -101,7 +101,8 @@ contract PlethoriVaultB {
             tickLower: tickLower,
             tickUpper: tickUpper,
             liquidity: liquidity,
-            blockNumber: block.number
+            blockNumber: block.number,
+            point:true
            });
        }
     }
